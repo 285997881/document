@@ -1,0 +1,12 @@
+SSH双机信任
+
+客户端上创建一对公私钥(公钥文件：~/.ssh/id_rsa.pub;私钥文件：~/.ssh/id_rsa)，然后把公钥放到服务器上(~/.ssh/authorized_keys)，自己保留好私钥。当ssh登录时，ssh程序会发送私钥去和服务器上的公钥做匹配。如果匹配成功就可以登录了。
+
+
+ssh-keygen -t rsa
+
+cd ~/.ssh
+
+ll
+
+scp -r id_rsa.pub 10.0.0.188:/root/.ssh/authorized_keys
