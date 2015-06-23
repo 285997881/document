@@ -1,0 +1,43 @@
+
+git clone相当于	git init加git fetch
+
+创建git服务器
+首先把现有仓库导出为裸仓库
+git clone --bare my_project my_project.git
+相当于cp -Rf my_project/.git my_project.git
+
+
+
+
+bash: git-upload-pack: command not found
+If you’re trying to locally clone a remote git repo via ssh and are getting this error, it’s probably because git-upload-pack isn’t actually in your PATH:
+local wolf$ git clone wolf@example.com:/Users/wolf/myproject
+Initialized empty Git repository in /Users/wolf/code/myproject/.git/
+bash: git-upload-pack: command not found
+fatal: The remote end hung up unexpectedly
+
+You can inspect your remote shell’s PATH like so:
+
+local wolf$ ssh wolf@example.com 'echo $PATH'
+/usr/bin:/bin:/usr/sbin:/sbin
+
+Too bad, my git-upload-pack lives in /usr/local/bin, so it can’t be found.
+
+Fortunately, it’s easy to add it to my PATH via .bashrc:
+
+local wolf$ ssh wolf@example.com
+remote wolf$ echo 'export PATH="$PATH:/usr/local/bin"' >> ~/.bashrc
+remote wolf$ exit
+
+Check our handy-work:
+local wolf$ ssh wolf@example.com 'echo $PATH'
+/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+
+Looks good, let’s try again:
+local wolf$ git clone wolf@example.com:/Users/wolf/myproject
+Initialized empty Git repository in /Users/wolf/code/myproject/.git/
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (3/3), done.
+Success.
