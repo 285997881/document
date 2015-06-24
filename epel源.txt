@@ -1,0 +1,7 @@
+epel源
+
+EPEL 是 Extra Packages for Enterprise Linux 的缩写（EPEL），是用于 Fedora-based Red Hat Enterprise Linux (RHEL) 的一个高质量软件源，所以同时也适用于 CentOS 或者 Scientific Linux 等发行版。
+
+http://mirrors.neusoft.edu.cn/epel/6/i386/epel-release-6-8.noarch.rpm
+
+http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html

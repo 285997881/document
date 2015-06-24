@@ -1,0 +1,18 @@
+网络接口配置文件
+[root@localhost ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth0
+# Intel Corporation 82545EM Gigabit Ethernet Controller (Copper)
+TYPE=Ethernet     	  #网卡类型
+DEVICE=eth0       	  #网卡接口名称
+ONBOOT=yes         	 #系统启动时是否自动加载
+BOOTPROTO=static   	 #启用地址协议 --static:静态协议 --bootp协议 --dhcp协议
+IPADDR=192.168.1.11      #网卡IP地址
+NETMASK=255.255.255.0    #网卡网络地址
+GATEWAY=192.168.1.1      #网卡网关地址
+DNS1=10.203.104.41       #网卡DNS地址
+HWADDR=00:0C:29:13:5D:74 #网卡设备MAC地址
+BROADCAST=192.168.1.255  #网卡广播地址 
+
+
+Determining if ip address 192.168.100.201 is already in use for device eth0...
+发现就只有这台服务器上使用了这个IP地址，然后查询相关资料，发现是在centos6.5默认开启了ARPCHECK,将其关闭即可解决
+ sed -i "ARPCHECK=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
