@@ -1,3 +1,110 @@
+https://www.kernel.org/pub/software/scm/git/git-2.4.4.tar.xz
+
+二进制安装Git
+yum install git
+
+源代码安装
+yum install curl-devel expat-devel gettext-devel \
+  openssl-devel zlib-devel
+
+ apt-get install libcurl4-gnutls-dev libexpat1-dev gettext \
+  libz-dev libssl-dev
+
+$ tar -zxf git-1.9.1.tar.gz
+$ cd git-1.9.1
+$ make configure
+$ ./configure --prefix=/usr
+$ make all doc info
+$ make install install-doc install-html install-info
+
+错误	BEGIN failed--compilation aborted at Makefile.PL line 3
+解决方法 yum install perl-ExtUtils-MakeMaker
+错误	/bin/sh: line 1: asciidoc: command not found
+解决方法 yum install asciidoc
+错误	/bin/sh: line 1: xmlto: command not found
+解决方法 	yum install xmlto
+错误	/bin/sh: line 1: docbook2x-texi: commandnot found
+解决方法	yum -y install texinfo perl-XML-SAX
+rpm -ivh http://mirror.1000mbps.com/fedora-epel/6Server/x86_64/docbook2X-0.8.8-1.el6.x86_64.rpm
+cd /usr/bin/
+ln -s db2x_docbook2texi docbook2x-texi
+
+
+
+配置文件
+/etc/gitconfig
+git config --system  读写的就是这个文件
+
+~/.gitconfig
+git config --global  读写的就是这个文件
+
+.git/config
+仅对当前项目有效
+
+每一个级别的配置都会覆盖上层的相同配置，所以 .git/config 里的配置会覆盖 /etc/gitconfig 中的同名变量
+
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+git config --global core.editor emacs
+
+查看配置信息
+git config --list
+git config user.name
+
+
+配置并初始化一个仓库（repository）、开始或停止跟踪（track）文件、暂存（stage）或提交（commit)更改
+
+初始化仓库
+git init
+该命令将创建一个名为 .git 的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干。 在这个时候，仅仅是做了初始化的操作，项目里的文件还没有被跟踪。
+git add *.c	跟踪文件
+
+git commit -m 'initial project version'	提交
+
+
+克隆仓库
+git clone https://github.com/libgit2/libgit2  mylibgit
+
+工作目录下的每一个文件都不外乎这两种状态：已跟踪或未跟踪。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能处于未修改，已修改或已放入暂存区。 工作目录中除已跟踪文件以外的所有其它文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有放入暂存区。 初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态。
+
+检查文件状态
+git status
+
+git add 	跟踪文件
+
+
+忽略文件
+cat .gitignore
+*.[oa]
+*~
+
+文件 .gitignore 的格式规范如下：
+
+    所有空行或者以 ＃ 开头的行都会被 Git 忽略。
+
+    可以使用标准的 glob 模式匹配。
+
+    匹配模式以（/）结尾说明要忽略的是目录。
+
+    要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。
+
+	
+git diff
+比较文件和暂存区域快照之间的差异
+
+git commit
+		-m
+		-a	跳过暂存区域，提交
+
+git rm 	移除文件
+		--cached	删除仓库文件，保留本地文件
+git mv  移动文件	
+git log	查看提交历史
+	git log -p -2		-p，显示每次提交的内容差异。-2 显示最近两次提交
+		--stat		看到每次提交简略的统计信息
+git commit --amend		修改最后一次提交
+
+
 
 git clone相当于	git init加git fetch
 
